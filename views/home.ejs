@@ -4,353 +4,466 @@
     <%- include('./partials/head') %>
     <title>Home Page</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* Your existing styles with mobile fixes */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #000000 0%, #000000 100%);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #000000 0%, #000000 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
 
-        /* Animated background particles */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 118, 117, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.2) 0%, transparent 50%);
-            animation: floatBg 20s ease-in-out infinite;
-            z-index: -2;
-        }
+/* Animated background particles */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 118, 117, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.2) 0%, transparent 50%);
+    animation: floatBg 20s ease-in-out infinite;
+    z-index: -2;
+}
 
-        /* Floating geometric shapes */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 25% 25%, #ffffff08 0%, transparent 2%),
-                radial-gradient(circle at 75% 75%, #ffffff06 0%, transparent 3%),
-                radial-gradient(circle at 50% 50%, #ffffff04 0%, transparent 2%);
-            animation: sparkle 15s linear infinite;
-            z-index: -1;
-        }
+/* Floating geometric shapes */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 25% 25%, #ffffff08 0%, transparent 2%),
+        radial-gradient(circle at 75% 75%, #ffffff06 0%, transparent 3%),
+        radial-gradient(circle at 50% 50%, #ffffff04 0%, transparent 2%);
+    animation: sparkle 15s linear infinite;
+    z-index: -1;
+}
 
-        @keyframes floatBg {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(1deg); }
-            66% { transform: translateY(10px) rotate(-1deg); }
-        }
+@keyframes floatBg {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(1deg); }
+    66% { transform: translateY(10px) rotate(-1deg); }
+}
 
-        @keyframes sparkle {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(180deg); }
-        }
+@keyframes sparkle {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+}
 
-        .container {
-            position: relative;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            padding: 2rem;
-            margin: 2rem auto;
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+.container {
+    position: relative;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 1200px; /* Added max-width for better control */
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-        .row {
-            gap: 2rem;
-        }
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center; /* Center cards on all screen sizes */
+}
 
-        .col {
-            flex: 0 0 auto;
-            animation: slideInUp 0.6s ease-out forwards;
-            opacity: 0;
-            transform: translateY(50px);
-        }
+.col {
+    flex: 0 0 auto;
+    animation: slideInUp 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateY(50px);
+    display: flex;
+    justify-content: center; /* Center individual cards */
+}
 
-        .col:nth-child(1) { animation-delay: 0.1s; }
-        .col:nth-child(2) { animation-delay: 0.2s; }
-        .col:nth-child(3) { animation-delay: 0.3s; }
-        .col:nth-child(4) { animation-delay: 0.4s; }
-        .col:nth-child(5) { animation-delay: 0.5s; }
-        .col:nth-child(6) { animation-delay: 0.6s; }
+.col:nth-child(1) { animation-delay: 0.1s; }
+.col:nth-child(2) { animation-delay: 0.2s; }
+.col:nth-child(3) { animation-delay: 0.3s; }
+.col:nth-child(4) { animation-delay: 0.4s; }
+.col:nth-child(5) { animation-delay: 0.5s; }
+.col:nth-child(6) { animation-delay: 0.6s; }
 
-        @keyframes slideInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            border: none !important;
-            border-radius: 20px;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.1),
-                0 10px 20px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-            position: relative;
-            width: 18rem !important;
-        }
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border: none !important;
+    border-radius: 20px;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 10px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    position: relative;
+    width: 18rem;
+    max-width: 100%; /* Prevent overflow on small screens */
+}
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
-            background-size: 200% 100%;
-            animation: shimmer 3s ease-in-out infinite;
-        }
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+}
 
-        @keyframes shimmer {
-            0%, 100% { background-position: -200% 0; }
-            50% { background-position: 200% 0; }
-        }
+@keyframes shimmer {
+    0%, 100% { background-position: -200% 0; }
+    50% { background-position: 200% 0; }
+}
 
-        .card:hover {
-            transform: translateY(-15px) rotateX(5deg);
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.15),
-                0 15px 30px rgba(0, 0, 0, 0.1);
-        }
+.card:hover {
+    transform: translateY(-15px) rotateX(5deg);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.15),
+        0 15px 30px rgba(0, 0, 0, 0.1);
+}
 
-        .card-img-top {
-            height: 200px;
-            object-fit: cover;
-            transition: all 0.5s ease;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-        }
+.card-img-top {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
 
-        .card:hover .card-img-top {
-            transform: scale(1.1);
-            filter: brightness(1.1) saturate(1.2);
-        }
+.card:hover .card-img-top {
+    transform: scale(1.1);
+    filter: brightness(1.1) saturate(1.2);
+}
 
-        .card-body {
-            padding: 1.5rem;
-            position: relative;
-            background: rgba(255, 255, 255, 0.98);
-        }
+.card-body {
+    padding: 1.5rem;
+    position: relative;
+    background: rgba(255, 255, 255, 0.98);
+}
 
-        .card-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #2d3748;
-            margin-bottom: 1rem;
-            line-height: 1.4;
-            transition: color 0.3s ease;
-        }
+.card-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #2d3748;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
 
-        .card:hover .card-title {
-            color: #667eea;
-        }
+.card:hover .card-title {
+    color: #667eea;
+}
 
-        .btn {
-            border: none;
-            border-radius: 25px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            margin-right: 0.5rem;
-        }
+.btn {
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem; /* Added for better mobile spacing */
+}
 
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
 
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-        }
+.btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
 
-        .btn:hover::before {
-            left: 100%;
-        }
+.btn:hover::before {
+    left: 100%;
+}
 
-        .btn:hover {
-            transform: translateY(-2px);
-            color: white;
-            text-decoration: none;
-        }
+.btn:hover {
+    transform: translateY(-2px);
+    color: white;
+    text-decoration: none;
+}
 
-        .btn-primary:hover {
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-        }
+.btn-primary:hover {
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
 
-        .btn-danger:hover {
-            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-        }
+.btn-danger:hover {
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+}
 
-        .btn:active {
-            transform: translateY(0);
-        }
+.btn:active {
+    transform: translateY(0);
+}
 
-        .card-actions {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
-        /* Delete button specific styles */
-        .btn-delete {
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-            position: relative;
-        }
+/* Delete button specific styles */
+.btn-delete {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    position: relative;
+}
 
-        .btn-delete:hover {
-            animation: shake 0.5s ease-in-out;
-        }
+.btn-delete:hover {
+    animation: shake 0.5s ease-in-out;
+}
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0) translateY(-2px); }
-            25% { transform: translateX(-2px) translateY(-2px); }
-            75% { transform: translateX(2px) translateY(-2px); }
-        }
+@keyframes shake {
+    0%, 100% { transform: translateX(0) translateY(-2px); }
+    25% { transform: translateX(-2px) translateY(-2px); }
+    75% { transform: translateX(2px) translateY(-2px); }
+}
 
-        /* Responsive adjustments */
-        @media (max-width: 1200px) {
-            .row {
-                row-cols: 3;
-            }
-        }
+/* IMPROVED RESPONSIVE ADJUSTMENTS */
 
-        @media (max-width: 992px) {
-            .row {
-                row-cols: 2;
-            }
-        }
+/* Large screens */
+@media (min-width: 1200px) {
+    .row {
+        justify-content: flex-start;
+    }
+    .col {
+        flex: 0 0 calc(33.333% - 1.33rem);
+        max-width: calc(33.333% - 1.33rem);
+    }
+}
 
-        @media (max-width: 768px) {
-            .row {
-                row-cols: 1;
-            }
-            
-            .container {
-                margin: 1rem;
-                padding: 1rem;
-            }
-            
-            .card {
-                width: 100% !important;
-                max-width: 350px;
-                margin: 0 auto;
-            }
+/* Medium to Large screens */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .col {
+        flex: 0 0 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+    }
+    .card {
+        width: 100%;
+        max-width: 320px;
+    }
+}
 
-            .card-actions {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
+/* Medium screens (tablets) */
+@media (min-width: 769px) and (max-width: 991px) {
+    .container {
+        padding: 1.5rem;
+        margin: 1.5rem auto;
+    }
+    
+    .row {
+        gap: 1.5rem;
+    }
+    
+    .col {
+        flex: 0 0 calc(50% - 0.75rem);
+        max-width: calc(50% - 0.75rem);
+    }
+    
+    .card {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .card-img-top {
+        height: 180px;
+    }
+}
 
-            .btn {
-                width: 100%;
-                text-align: center;
-                margin-right: 0;
-            }
-        }
+/* Small screens (mobile phones) */
+@media (max-width: 768px) {
+    .container {
+        margin: 0.5rem;
+        padding: 1rem;
+        border-radius: 16px;
+    }
+    
+    .row {
+        gap: 1rem;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .col {
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: 350px;
+    }
+    
+    .card {
+        width: 100% !important;
+        max-width: 100%;
+        margin: 0;
+    }
 
-        /* Scroll animations */
-        @media (prefers-reduced-motion: no-preference) {
-            .container {
-                animation: fadeInScale 0.8s ease-out;
-            }
-        }
+    .card-img-top {
+        height: 200px;
+    }
 
-        @keyframes fadeInScale {
-            0% {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+    .card-body {
+        padding: 1.25rem;
+    }
 
-        /* Loading shimmer effect */
-        .card-img-top[src=""] {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }
+    .card-title {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
 
-        @keyframes loading {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
+    .card-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+    }
 
-        /* Loading overlay for delete action */
-        .card.deleting {
-            opacity: 0.6;
-            pointer-events: none;
-        }
+    .btn {
+        width: 100%;
+        text-align: center;
+        margin-right: 0;
+        margin-bottom: 0;
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    /* Reduce hover effects on mobile for better performance */
+    .card:hover {
+        transform: translateY(-8px);
+    }
+    
+    .card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+}
 
-        .card.deleting::after {
-            content: 'Deleting...';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-weight: 600;
-            z-index: 100;
-        }
+/* Extra small screens */
+@media (max-width: 480px) {
+    .container {
+        margin: 0.25rem;
+        padding: 0.75rem;
+    }
+    
+    .col {
+        max-width: 320px;
+    }
+    
+    .card-img-top {
+        height: 160px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .card-title {
+        font-size: 0.95rem;
+    }
+    
+    .btn {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Scroll animations */
+@media (prefers-reduced-motion: no-preference) {
+    .container {
+        animation: fadeInScale 0.8s ease-out;
+    }
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Loading shimmer effect */
+.card-img-top[src=""] {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Loading overlay for delete action */
+.card.deleting {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.card.deleting::after {
+    content: 'Deleting...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    z-index: 100;
+}
     </style>
 </head>
 <body>
     <%- include('./partials/nav') %>
     
     <div class="container mt-3">
-        <div class="row row-cols-4">
+        <div class="row">
             <% blogs.forEach(blog => { %>
                 <div class="col">
-                    <div class="card col" style="width: 18rem;" id="card-<%= blog._id %>">
+                    <div class="card" id="card-<%= blog._id %>">
                         <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="<%= blog.title %>">
                         <div class="card-body">
                             <h5 class="card-title"><%= blog.title %></h5>
@@ -402,6 +515,9 @@
                         
                         // Show success message
                         showNotification('Blog deleted successfully!', 'success');
+                        
+                        // Reorganize remaining cards for better mobile layout
+                        reorganizeCards();
                     }, 500);
                 } else {
                     // Remove loading state
@@ -413,6 +529,16 @@
                 card.classList.remove('deleting');
                 console.error('Error deleting blog:', error);
                 showNotification('Error deleting blog. Please try again.', 'error');
+            }
+        }
+
+        function reorganizeCards() {
+            // Force reflow for responsive grid after card deletion
+            const row = document.querySelector('.row');
+            if (row) {
+                row.style.display = 'none';
+                row.offsetHeight; // Trigger reflow
+                row.style.display = 'flex';
             }
         }
 
@@ -431,6 +557,8 @@
                 animation: slideInRight 0.3s ease-out;
                 background: ${type === 'success' ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)'};
                 box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                max-width: calc(100vw - 40px);
+                word-wrap: break-word;
             `;
             notification.textContent = message;
             
@@ -447,7 +575,34 @@
             }, 3000);
         }
 
-        // Add CSS animations for notifications
+        // Handle window resize for better mobile experience
+        function handleResize() {
+            const cards = document.querySelectorAll('.card');
+            const isMobile = window.innerWidth <= 768;
+            
+            cards.forEach(card => {
+                if (isMobile) {
+                    // Ensure proper mobile styling
+                    card.style.width = '100%';
+                    card.style.maxWidth = '350px';
+                } else {
+                    // Reset to CSS-controlled width for desktop
+                    card.style.width = '';
+                    card.style.maxWidth = '';
+                }
+            });
+        }
+
+        // Add event listeners
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(handleResize, 100); // Delay to ensure orientation change is complete
+        });
+
+        // Initial call
+        document.addEventListener('DOMContentLoaded', handleResize);
+
+        // Add CSS animations for notifications and mobile optimizations
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideInRight {
@@ -461,8 +616,42 @@
             }
             
             @keyframes slideOutDown {
-                from { transform: translateY(0); opacity: 1; }
-                to { transform: translateY(50px); opacity: 0; }
+                from { transform: translateY(0); opacity: 1; scale: 1; }
+                to { transform: translateY(50px); opacity: 0; scale: 0.9; }
+            }
+
+            /* Mobile-specific notification positioning */
+            @media (max-width: 768px) {
+                .notification {
+                    top: 10px !important;
+                    right: 10px !important;
+                    left: 10px !important;
+                    max-width: none !important;
+                    margin: 0 !important;
+                }
+            }
+
+            /* Ensure smooth transitions on mobile */
+            @media (max-width: 768px) {
+                .card {
+                    transition: all 0.3s ease !important;
+                }
+                
+                .card:hover {
+                    transform: translateY(-5px) !important;
+                }
+            }
+
+            /* Fix for touch devices */
+            @media (hover: none) and (pointer: coarse) {
+                .card:hover {
+                    transform: none !important;
+                }
+                
+                .card:active {
+                    transform: scale(0.98) !important;
+                    transition: transform 0.1s ease !important;
+                }
             }
         `;
         document.head.appendChild(style);
