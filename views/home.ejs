@@ -4,6 +4,9 @@
     <%- include('./partials/head') %>
     <title>Home Page</title>
     <style>
+
+
+
 /* Your existing styles with mobile fixes */
 * {
     margin: 0;
@@ -77,10 +80,15 @@ body::after {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.Trending_Posts{
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
 .row {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1rem;
     justify-content: center; /* Center cards on all screen sizes */
 }
 
@@ -460,6 +468,7 @@ body::after {
     <%- include('./partials/nav') %>
     
     <div class="container mt-3">
+        <h3 class="Trending_Posts">Trending Posts</h3>
         <div class="row">
             <% blogs.forEach(blog => { %>
                 <div class="col">
