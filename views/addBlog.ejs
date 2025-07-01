@@ -2,35 +2,258 @@
 <html lang="en">
 <head>
    <%- include('./partials/head') %>
-    <title>Add New Blog</title>
+    <title>Add New Snap</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 700px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .form-title {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .form-subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .form-control {
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.15);
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+        }
+        
+        .form-control:hover {
+            border-color: #bdc3c7;
+            transform: translateY(-1px);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 15px 20px;
+            border: 2px dashed #667eea;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(102, 126, 234, 0.05);
+            color: #667eea;
+            font-weight: 500;
+        }
+        
+        .file-input-label:hover {
+            border-color: #764ba2;
+            background: rgba(118, 75, 162, 0.1);
+            color: #764ba2;
+            transform: translateY(-2px);
+        }
+        
+        .file-input-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-submit:active {
+            transform: translateY(-1px);
+        }
+        
+        .form-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .floating-label {
+            position: absolute;
+            top: 0;
+            left: 20px;
+            background: white;
+            padding: 0 10px;
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: 500;
+            transform: translateY(-50%);
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            
+            .form-title {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animation for form elements */
+        .form-group {
+            animation: slideUp 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-    
+   
     <%- include('./partials/nav') %>
-
-    <div class="container mt-3">
-        <form action="/blog" method="post" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="coverImage" class="form-label">Cover Image</label>
-                <input type="file" class="form-control" id="coverImage" name="coverImage"  aria-describedby="coverImage">
-            </div>
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" name="title"  aria-describedby="title">
-            </div>
-            <div class="mb-3">
-                <label for="body">Body</label>
-                <textarea name="body" class="form-control"  id="body"></textarea>
-            </div>
-            <div class="mb-3">
-                <button class="btn btn-primary">Submit</button>
-            </div>
-        </form>
+    
+    <div class="container">
+        <div class="form-container">
+            <h1 class="form-title">Create New SnapBoard</h1>
+            <p class="form-subtitle">Share your thoughts with the world</p>
+            
+            <form action="/blog" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="coverImage" class="form-label">Cover Image</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" class="form-control" id="coverImage" name="coverImage" aria-describedby="coverImage" accept="image/*">
+                        <label for="coverImage" class="file-input-label">
+                            <span class="file-input-icon">📸</span>
+                            <span>Click to upload cover image</span>
+                            <small style="display: block; margin-top: 5px; opacity: 0.7;">JPG, PNG, or GIF (Max 5MB)</small>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="floating-label">snap Title</div>
+                    <input type="text" class="form-control" id="title" name="title" aria-describedby="title" placeholder="Enter your snap title..." required>
+                </div>
+                
+                <div class="form-group">
+                    <div class="floating-label">snap Content</div>
+                    <textarea name="body" class="form-control" id="body" placeholder="Write your snap content here..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn-submit">
+                        Publish snap ✨
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-
-
-
+    
     <%- include('./partials/scripts') %>
-
+    
+    <script>
+        // File input enhancement
+        document.getElementById('coverImage').addEventListener('change', function(e) {
+            const label = document.querySelector('.file-input-label span:last-child');
+            if (e.target.files.length > 0) {
+                label.textContent = `Selected: ${e.target.files[0].name}`;
+                label.style.color = '#27ae60';
+            } else {
+                label.textContent = 'Click to upload cover image';
+                label.style.color = '';
+            }
+        });
+        
+        // Form validation enhancement
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            const submitBtn = document.querySelector('.btn-submit');
+            submitBtn.innerHTML = 'Publishing... <span style="animation: spin 1s linear infinite;">⏳</span>';
+            submitBtn.disabled = true;
+        });
+    </script>
+    
+    <style>
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </body>
 </html>

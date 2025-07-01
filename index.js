@@ -1,4 +1,5 @@
 const path = require("path");
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require('cookie-parser');
@@ -18,11 +19,15 @@ const { request } = require("http");
 
 const app = express();
 
-const PORT = 8000 ;
+
+const PORT = process.env.PORT || 8000;
 
 mongoose
-    .connect('mongodb://localhost:27017/blogiFY')
-    .then((e) => console.log("MongoDB Connected"));
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB Atlas Connected'))
+  .catch((err) => console.log('Mongo Error: ', err));
+
+
 
 app.set("view engine" , "ejs");
 app.set("views" , path.resolve("./views"));

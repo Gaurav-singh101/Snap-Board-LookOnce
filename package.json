@@ -12,14 +12,20 @@
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",
+    "dotenv": "^17.0.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "melter": "^0.0.1",
-    "mongoose": "^8.9.5",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.1",
     "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "nodeman": "^1.1.2"
-  }
+  },
+  "engines": {
+  "node": ">=16.0.0"
+}
+
 }
